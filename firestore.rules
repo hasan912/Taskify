@@ -1,0 +1,54 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Users collection
+    match /users/{userId} {
+      // Users can read their own document
+      allow read: if request.auth != null && request.auth.uid == userId;
+      // Users can create their own document during signup
+      allow create: if request.auth != null && request.auth.uid == userId;
+      // Users can update their own document
+      allow update: if request.auth != null && request.auth.uid == userId;
+      // No one can delete user documents
+      allow delete: if false;
+    }
+    
+    // Tasks collection
+    match /tasks/{taskId} {
+      // Anyone authenticated can read tasks
+      allow read: if request.auth != null;
+      
+      // Only admins can create tasks
+      allow create: if request.auth != null && 
+                      get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      
+      // Admins can update any task, members can update tasks assigned to them
+      allow update: if request.auth != null && (
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+        resource.data.assignedTo == request.auth.uid
+      );
+      
+      // Only admins can delete tasks
+      allow delete: if request.auth != null && 
+                      get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // Notifications collection
+    match /notifications/{notificationId} {
+      // Users can only read their own notifications
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      
+      // System can create notifications (from server/cloud functions)
+      // In practice, your Next.js API routes will create these
+      allow create: if request.auth != null;
+      
+      // Users can update their own notifications (mark as read)
+      allow update: if request.auth != null && resource.data.userId == request.auth.uid;
+      
+      // Users can delete their own notifications
+      allow delete: if request.auth != null && resource.data.userId == request.auth.uid;
+    }
+  }
+}
