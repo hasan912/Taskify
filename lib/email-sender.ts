@@ -119,7 +119,7 @@ function generateEmailHTML({
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
                 <td align="center" style="padding: 20px 0;">
-                  <a href="http://localhost:3000/dashboard" style="display: inline-block; background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);">
+                  <a href="https://taskify-team.vercel.app//dashboard" style="display: inline-block; background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);">
                     View Task Dashboard →
                   </a>
                 </td>
