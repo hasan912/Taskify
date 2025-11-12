@@ -97,23 +97,23 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-background">
       {/* Modern Header with Gradient */}
       <header className="sticky top-0 z-50 backdrop-blur-lg bg-background/80 border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-3">
-                <div className="relative">
+        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-3 sm:gap-6 min-w-0 flex-1">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="relative flex-shrink-0">
                   <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full" />
-                  <div className="relative h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg">
-                    <CheckSquare className="h-6 w-6 text-white" />
+                  <div className="relative h-8 w-8 sm:h-10 sm:w-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg">
+                    <CheckSquare className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                   </div>
                 </div>
-                <div>
-                  <h1 className="text-2xl font-bold gradient-text">Taskify</h1>
-                  <p className="text-xs text-muted-foreground">Task Management System</p>
+                <div className="min-w-0">
+                  <h1 className="text-lg sm:text-2xl font-bold gradient-text truncate">Taskify</h1>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground hidden xs:block">Task Management</p>
                 </div>
               </div>
               
-              <div className="hidden md:flex items-center gap-3 px-4 py-2 rounded-lg bg-muted/50">
+              <div className="hidden lg:flex items-center gap-3 px-4 py-2 rounded-lg bg-muted/50">
                 <span className="text-sm text-muted-foreground">Welcome back,</span>
                 <span className="text-sm font-semibold">{userProfile.name}</span>
                 <span className="px-2.5 py-1 rounded-md bg-primary/10 text-primary text-xs font-bold">
@@ -122,19 +122,28 @@ export default function DashboardPage() {
               </div>
             </div>
             
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
               <NotificationBell />
               <ThemeToggle />
               <Button 
                 variant="ghost" 
                 size="sm" 
                 onClick={signOut}
-                className="hover:bg-destructive/10 hover:text-destructive"
+                className="hover:bg-destructive/10 hover:text-destructive h-8 sm:h-9 px-2 sm:px-3"
               >
-                <LogOut className="h-4 w-4 mr-2" />
-                Sign Out
+                <LogOut className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Sign Out</span>
               </Button>
             </div>
+          </div>
+          
+          {/* Mobile User Info */}
+          <div className="flex lg:hidden items-center gap-2 mt-3 pt-3 border-t">
+            <span className="text-xs text-muted-foreground">Welcome,</span>
+            <span className="text-xs font-semibold truncate flex-1">{userProfile.name}</span>
+            <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold flex-shrink-0">
+              {userProfile.role.toUpperCase()}
+            </span>
           </div>
         </div>
       </header>
@@ -150,22 +159,22 @@ export default function DashboardPage() {
 
         {/* Tasks Section with Modern Design */}
         <div className="mt-8">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-            <div>
-              <h2 className="text-3xl font-bold flex items-center gap-3">
-                <Sparkles className="h-7 w-7 text-primary" />
-                Your Tasks
-              </h2>
-              <p className="text-muted-foreground mt-1">Manage and track all your tasks</p>
+          <div className="flex flex-col gap-4 mb-6">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Sparkles className="h-6 w-6 sm:h-7 sm:w-7 text-primary shrink-0" />
+              <div>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">Your Tasks</h2>
+                <p className="text-xs sm:text-sm text-muted-foreground mt-1">Manage and track all your tasks</p>
+              </div>
             </div>
             
-            <div className="flex flex-wrap gap-3">
-              <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+              <div className="grid grid-cols-2 sm:flex gap-2">
                 <Button 
                   variant={filter === "all" ? "default" : "outline"} 
                   size="sm" 
                   onClick={() => setFilter("all")}
-                  className={filter === "all" ? "shadow-lg" : ""}
+                  className={`text-xs sm:text-sm ${filter === "all" ? "shadow-lg" : ""}`}
                 >
                   All Tasks
                 </Button>
@@ -173,7 +182,7 @@ export default function DashboardPage() {
                   variant={filter === "my-tasks" ? "default" : "outline"}
                   size="sm"
                   onClick={() => setFilter("my-tasks")}
-                  className={filter === "my-tasks" ? "shadow-lg" : ""}
+                  className={`text-xs sm:text-sm ${filter === "my-tasks" ? "shadow-lg" : ""}`}
                 >
                   My Tasks
                 </Button>
@@ -181,7 +190,7 @@ export default function DashboardPage() {
                   variant={filter === "pending" ? "default" : "outline"}
                   size="sm"
                   onClick={() => setFilter("pending")}
-                  className={filter === "pending" ? "shadow-lg" : ""}
+                  className={`text-xs sm:text-sm ${filter === "pending" ? "shadow-lg" : ""}`}
                 >
                   Pending
                 </Button>
@@ -189,7 +198,7 @@ export default function DashboardPage() {
                   variant={filter === "completed" ? "default" : "outline"}
                   size="sm"
                   onClick={() => setFilter("completed")}
-                  className={filter === "completed" ? "shadow-lg" : ""}
+                  className={`text-xs sm:text-sm ${filter === "completed" ? "shadow-lg" : ""}`}
                 >
                   Completed
                 </Button>
@@ -198,7 +207,7 @@ export default function DashboardPage() {
               {userProfile.role === "admin" && (
                 <Button 
                   onClick={() => setCreateDialogOpen(true)}
-                  className="shadow-lg hover:shadow-xl transition-shadow"
+                  className="shadow-lg hover:shadow-xl transition-shadow w-full sm:w-auto"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   New Task

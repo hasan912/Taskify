@@ -52,41 +52,46 @@ export function TaskChart({ tasks }: TaskChartProps) {
     : 0
 
   return (
-    <div className="grid gap-6 md:grid-cols-2">
+    <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2">
       {/* Bar Chart */}
       <Card className="modern-card">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-primary" />
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+            <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
             Task Distribution
           </CardTitle>
-          <CardDescription>Overview of tasks by status</CardDescription>
+          <CardDescription className="text-xs sm:text-sm">Overview of tasks by status</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pb-4">
           <ChartContainer
             config={{
               value: {
                 label: "Tasks",
               },
             }}
-            className="h-[300px]"
+            className="h-[200px] sm:h-[250px] md:h-[300px] w-full"
           >
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={barData}>
+              <BarChart data={barData} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
                 <XAxis 
                   dataKey="name" 
                   stroke="hsl(var(--muted-foreground))"
-                  fontSize={12}
+                  fontSize={10}
+                  tickLine={false}
+                  axisLine={false}
                 />
                 <YAxis 
                   stroke="hsl(var(--muted-foreground))"
-                  fontSize={12}
+                  fontSize={10}
+                  tickLine={false}
+                  axisLine={false}
                 />
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <Bar 
                   dataKey="value" 
-                  radius={[12, 12, 0, 0]}
+                  radius={[8, 8, 0, 0]}
                   className="cursor-pointer"
+                  maxBarSize={60}
                 >
                   {barData.map((entry, index) => (
                     <Cell 
@@ -104,31 +109,31 @@ export function TaskChart({ tasks }: TaskChartProps) {
 
       {/* Pie Chart */}
       <Card className="modern-card">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <div className="h-5 w-5 rounded-full bg-gradient-to-r from-primary to-secondary" />
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+            <div className="h-4 w-4 sm:h-5 sm:w-5 rounded-full bg-gradient-to-r from-primary to-secondary" />
             Completion Rate
           </CardTitle>
-          <CardDescription>{completionRate}% of tasks completed</CardDescription>
+          <CardDescription className="text-xs sm:text-sm">{completionRate}% of tasks completed</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pb-4">
           <ChartContainer
             config={{
               value: {
                 label: "Tasks",
               },
             }}
-            className="h-[300px]"
+            className="h-[200px] sm:h-[250px] md:h-[300px] w-full"
           >
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
                   data={pieData}
                   cx="50%"
-                  cy="50%"
+                  cy="45%"
                   labelLine={false}
                   label={(entry) => entry.value > 0 ? entry.value : ''}
-                  outerRadius={100}
+                  outerRadius="65%"
                   fill="#8884d8"
                   dataKey="value"
                   strokeWidth={2}
@@ -145,8 +150,10 @@ export function TaskChart({ tasks }: TaskChartProps) {
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <Legend 
                   verticalAlign="bottom" 
-                  height={36}
-                  formatter={(value) => <span className="text-sm">{value}</span>}
+                  height={32}
+                  iconSize={8}
+                  wrapperStyle={{ fontSize: '12px' }}
+                  formatter={(value) => <span className="text-xs sm:text-sm">{value}</span>}
                 />
               </PieChart>
             </ResponsiveContainer>
